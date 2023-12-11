@@ -2,13 +2,10 @@ import Config
 
 # Configure your database
 config :bmvp, Bmvp.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "bmvp_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  url: "ecto://postgres:postgres@localhost/bmvp_dev"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
