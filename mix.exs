@@ -39,7 +39,7 @@ defmodule Bmvp.MixProject do
       {:finch, "~> 0.13"},
       {:floki, ">= 0.30.0", only: :test},
       {:gettext, "~> 0.20"},
-      {:hackney, "~> 1.18.1"},
+      {:hackney, "~> 1.20.1"},
       {:jason, "~> 1.2"},
       {:phoenix, "~> 1.7.10"},
       {:phoenix_ecto, "~> 4.4"},
