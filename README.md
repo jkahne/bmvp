@@ -35,3 +35,10 @@ go to the github settings for the project, Secrets and Variables, Actions.  Then
   - you can go to http://localhost:4000/dev/mailbox to see sent emails
   - the email is to confirm your account.  what happens if you don't?
 
+---
+
+## set up email
+  - I set up an account with sendgrid (jk@jeremykahne.com - I already had this email purchased )
+  - set up an api key with sendgrid
+  - `fly secrets set SENDGRID_API_KEY=apikey`
+

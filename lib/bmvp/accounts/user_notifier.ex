@@ -8,7 +8,7 @@ defmodule Bmvp.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Bmvp", "contact@example.com"})
+      |> from({"JK", "jk@jeremykahne.com"})
       |> subject(subject)
       |> text_body(body)
 
