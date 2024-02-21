@@ -12,12 +12,12 @@ go to the github settings for the project, Secrets and Variables, Actions.  Then
 
 
 ## Set up domain
-  using homelessjedakan.com for now
-  set up DNS:  
+  - using homelessjedakan.com for now
+  - set up DNS:  
     - `fly ips list`
     - A record, host: @, ip4
     - AAAA record, host: @, ip6
-  set up ssl and www:
+  - set up ssl and www:
     - `fly certs create homelessjedakan.com`
     - `fly certs create www.homelessjedakan.com`
       - check if they're ready via 
@@ -25,7 +25,7 @@ go to the github settings for the project, Secrets and Variables, Actions.  Then
         - `fly certs show www.homelessjedakan.com`
     - add CNAME record, www, homelessjedakan.com 
     - add `check_origin: ["https://#{host}", "https://www.#{host}"],` to runtime.exs
-  set up the app PHX_HOST env var
+  - set up the app PHX_HOST env var
     - fly secrets set PHX_HOST=homelessjedakan.com
 
 
