@@ -28,4 +28,10 @@ go to the github settings for the project, Secrets and Variables, Actions.  Then
   - set up the app PHX_HOST env var
     - fly secrets set PHX_HOST=homelessjedakan.com
 
+---
+
+## add users
+  - `mix phx.gen.auth Accounts User users` 
+  - you can go to http://localhost:4000/dev/mailbox to see sent emails
+  - the email is to confirm your account.  what happens if you don't?
 
