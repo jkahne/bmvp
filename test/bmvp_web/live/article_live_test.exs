@@ -2,29 +2,38 @@ defmodule BmvpWeb.ArticleLiveTest do
   use BmvpWeb.ConnCase
 
   import Phoenix.LiveViewTest
+  import Bmvp.AccountsFixtures
   import Bmvp.ArticlesFixtures
 
   @create_attrs %{title: "some title", content: "some content"}
   @update_attrs %{title: "some updated title", content: "some updated content"}
   @invalid_attrs %{title: nil, content: nil}
 
-  defp create_article(_) do
-    article = article_fixture()
+  defp create_article( ctx ) do
+    article = article_fixture(%{:author_id => ctx.user.id})
     %{article: article}
   end
 
-  describe "Index" do
-    setup [:create_article]
+  defp create_user(_) do
+    %{user: user_fixture()}
+  end
 
-    test "lists all articles", %{conn: conn, article: article} do
-      {:ok, _index_live, html} = live(conn, ~p"/articles")
+  describe "Index" do
+    setup [:create_user, :create_article]
+
+    test "lists all articles", %{conn: conn, article: article, user: user} do
+      {:ok, _index_live, html} = conn
+              |> log_in_user(user)
+              |> live( ~p"/articles")
 
       assert html =~ "Listing Articles"
       assert html =~ article.title
     end
 
-    test "saves new article", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/articles")
+    test "saves new article", %{conn: conn, user: user} do
+      {:ok, index_live, _html} = conn
+                    |> log_in_user(user)
+                    |> live( ~p"/articles")
 
       assert index_live |> element("a", "New Article") |> render_click() =~
                "New Article"
@@ -46,8 +55,10 @@ defmodule BmvpWeb.ArticleLiveTest do
       assert html =~ "some title"
     end
 
-    test "updates article in listing", %{conn: conn, article: article} do
-      {:ok, index_live, _html} = live(conn, ~p"/articles")
+    test "updates article in listing", %{conn: conn, article: article, user: user} do
+      {:ok, index_live, _html} = conn
+                                 |> log_in_user(user)
+                                 |> live( ~p"/articles")
 
       assert index_live |> element("#articles-#{article.id} a", "Edit") |> render_click() =~
                "Edit Article"
@@ -69,8 +80,10 @@ defmodule BmvpWeb.ArticleLiveTest do
       assert html =~ "some updated title"
     end
 
-    test "deletes article in listing", %{conn: conn, article: article} do
-      {:ok, index_live, _html} = live(conn, ~p"/articles")
+    test "deletes article in listing", %{conn: conn, article: article, user: user} do
+      {:ok, index_live, _html} = conn
+                                 |> log_in_user(user)
+                                 |> live( ~p"/articles")
 
       assert index_live |> element("#articles-#{article.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#articles-#{article.id}")
@@ -78,17 +91,21 @@ defmodule BmvpWeb.ArticleLiveTest do
   end
 
   describe "Show" do
-    setup [:create_article]
+    setup [:create_user, :create_article]
 
-    test "displays article", %{conn: conn, article: article} do
-      {:ok, _show_live, html} = live(conn, ~p"/articles/#{article}")
+    test "displays article", %{conn: conn, article: article, user: user} do
+      {:ok, _show_live, html} = conn
+                                |> log_in_user(user)
+                                |> live( ~p"/articles/#{article}")
 
       assert html =~ "Show Article"
       assert html =~ article.title
     end
 
-    test "updates article within modal", %{conn: conn, article: article} do
-      {:ok, show_live, _html} = live(conn, ~p"/articles/#{article}")
+    test "updates article within modal", %{conn: conn, article: article, user: user} do
+      {:ok, show_live, _html} = conn
+                                |> log_in_user(user)
+                                |> live( ~p"/articles/#{article}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Article"
