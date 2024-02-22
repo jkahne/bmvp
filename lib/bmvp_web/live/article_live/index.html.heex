@@ -8,6 +8,12 @@
     </:actions>
   </.header>
 
+<%= if Enum.count(@streams.articles) == 0 do %>
+  <div class="mt-20">
+  <BmvpWeb.Components.EmptyState.show text="You have no articles yet" image="write.svg" />
+  </div>
+<% else %>
+
   <.table
     id="articles"
     rows={@streams.articles}
@@ -30,6 +36,7 @@
       </.link>
     </:action>
   </.table>
+<% end %>
 
   <.modal :if={@live_action in [:new, :edit]} id="article-modal" show on_cancel={JS.patch(~p"/articles")}>
     <.live_component
