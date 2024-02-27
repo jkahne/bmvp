@@ -157,6 +157,18 @@ defmodule Bmvp.Accounts do
     |> Ecto.Multi.delete_all(:tokens, UserToken.by_user_and_contexts_query(user, [context]))
   end
 
+  def update_user_username(user, attrs) do
+    user
+    |> User.username_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def get_user_by_username(username) do
+    User
+    |> Repo.get_by( username: username)
+    |> Repo.normalize_one
+  end
+
   @doc ~S"""
   Delivers the update email instructions to the given user.
 
@@ -185,6 +197,10 @@ defmodule Bmvp.Accounts do
   """
   def change_user_password(user, attrs \\ %{}) do
     User.password_changeset(user, attrs, hash_password: false)
+  end
+
+  def change_user_username(user, attrs \\ %{}) do
+    User.username_changeset(user, attrs)
   end
 
   @doc """
