@@ -5,7 +5,7 @@ config :bmvp, Bmvp.Repo,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10,
-  url: "ecto://postgres:postgres@localhost/bmvp_dev"
+  url: "ecto://postgres:postgres@localhost:5433/bmvp_dev"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

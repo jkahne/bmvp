@@ -1,0 +1,14 @@
+version: "3"
+services:
+  bmvp_postgres:
+    image: postgres:16
+    container_name: build-mvp-with-elixir
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - bmvp_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  bmvp_postgres_data:
